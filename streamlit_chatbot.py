@@ -192,15 +192,12 @@ def main():
     st.title("🤖 FoodPass Conversational Chatbot")
     st.markdown("Ask me anything about the FoodPass offering on StartEngine!")
     
-    # Initialize chatbot
     if 'chatbot' not in st.session_state:
         st.session_state.chatbot = StreamlitConversationalChatbot()
     
-    # Initialize chat history
     if "messages" not in st.session_state:
         st.session_state.messages = []
     
-    # Sidebar for setup
     with st.sidebar:
         st.header("⚙️ Setup")
         
@@ -215,7 +212,6 @@ def main():
                 st.error("❌ Failed to setup chatbot. Please try again.")
                 st.session_state.chatbot_ready = False
         
-        # Display chatbot status
         if hasattr(st.session_state, 'chatbot_ready'):
             if st.session_state.chatbot_ready:
                 st.success("🤖 Chatbot Status: Ready")
@@ -228,38 +224,28 @@ def main():
         st.markdown("### About")
         st.markdown("This chatbot is trained on the FoodPass offering page from StartEngine.")
     
-    # Main chat interface
     st.header("💬 Chat with FoodPass Assistant")
     
-    # Display chat messages
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
     
-    # Chat input
     if prompt := st.chat_input("Ask me about FoodPass..."):
-        # Add user message to chat history
         st.session_state.messages.append({"role": "user", "content": prompt})
         
-        # Display user message
         with st.chat_message("user"):
             st.markdown(prompt)
         
-        # Check if chatbot is ready
         if not hasattr(st.session_state, 'chatbot_ready') or not st.session_state.chatbot_ready:
             response = "Please setup the chatbot first using the button in the sidebar."
         else:
-            # Get chatbot response
             response = st.session_state.chatbot.get_response(prompt)
         
-        # Add assistant response to chat history
         st.session_state.messages.append({"role": "assistant", "content": response})
         
-        # Display assistant response
         with st.chat_message("assistant"):
             st.markdown(response)
     
-    # Clear chat button
     if st.button("🗑️ Clear Chat"):
         st.session_state.messages = []
         st.rerun()
