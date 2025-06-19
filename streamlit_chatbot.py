@@ -226,7 +226,7 @@ def main():
         
         st.markdown("---")
         st.markdown("### About")
-        st.markdown("This chatbot is trained on the FoodPass offering page from StartEngine. It can answer questions about the investment opportunity, company details, and more.")
+        st.markdown("This chatbot is trained on the FoodPass offering page from StartEngine.")
     
     # Main chat interface
     st.header("💬 Chat with FoodPass Assistant")
